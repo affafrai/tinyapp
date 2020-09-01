@@ -56,16 +56,35 @@ app.get("/u/:shortURL", (req, res) => {
   
     let randomString = generateRandomString(6,["5","3","a","f","n"])  // Log the POST request body to the console
     console.log(randomString);
-
     urlDatabase[randomString] = req.body.longURL    
     res.redirect(`/urls/${randomString}`);         // Respond with 'Ok' (we will replace this)
   });
   
+  app.post("/urls/:shortURL/update", (req,res) => {
+    //  urlDatabase[req.params.shortURL]= 
+     let newLongURL = req.body.longURL
+     console.log("this is req body " + req);
+     let id = req.params.shortURL;
+    for ( let key in urlDatabase) {
+      if (id === key) {
+        urlDatabase[id] = newLongURL
+        res.redirect("/urls")
+      }
+    }
+  })
+
   app.post("/urls/:shortURL/delete", (req, res) => {
     let shortURL = req.params.shortURL
     delete urlDatabase[shortURL];
     res.redirect("/urls");
   }) 
+
+  // app.post("/urls/:shortURL", (req, res) => {
+  //   // let shortURL = req.params.shortURL
+   
+  //   res.redirect("/urls");
+  // }) 
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
