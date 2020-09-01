@@ -8,6 +8,17 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.set("view engine", "ejs")
 
+
+function generateRandomString(strLength, arr) {
+  var ans = ''; 
+            for (var i = strLength; i > 0; i--) { 
+                ans +=  
+                  arr[Math.floor(Math.random() * arr.length)]; 
+            } 
+            return ans; 
+        } 
+
+
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
@@ -58,13 +69,4 @@ app.listen(PORT, () => {
 });
 
 
-function generateRandomString(strLength, arr) {
-  var ans = ''; 
-            for (var i = strLength; i > 0; i--) { 
-                ans +=  
-                  arr[Math.floor(Math.random() * arr.length)]; 
-            } 
-            return ans; 
-        } 
 
-console.log(generateRandomString(6,["1","r","t","4","5"]))
