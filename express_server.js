@@ -30,22 +30,29 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  let templateVars = { urls: urlDatabase };
+  let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
   res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+  let templateVars = {
+    username: req.cookies["username"],
+  
+  };
+  res.render("urls_new", templateVars);
 });
 
 app.get("/u/:shortURL", (req, res) => {
+  let templateVars = {
+    username: req.cookies["username"],
+  };
   let shortURL = req.params.shortURL;
   const longURL = urlDatabase[shortURL];
-  res.redirect(longURL);
+  res.redirect(longURL, templateVars);
 })
 
 app.get("/urls/:shortURL", (req, res) => {
-  let templateVars ={ shortURL : req.params.shortURL, longURL : urlDatabase[req.params.shortURL]};
+  let templateVars ={ shortURL : req.params.shortURL, longURL : urlDatabase[req.params.shortURL],username: req.cookies["username"] };
   console.log("show req params")
   console.log(req.params)
   res.render("urls_show", templateVars) 
@@ -78,23 +85,15 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   res.redirect("/urls");
 }) 
 
-
+app.post("/logout", (req, res) => {
+  res.clearCookie("username");
+  res.redirect("/urls")
+})
 
 app.post('/login', (req, res) => {
   const { username } = req.body
   console.log("user name " + username)
-  
-  // const password = req.body.password
-  // // if (checkPassword(bcrypt, userObj[nicename], password)) {
-  //   res.
-
-  //   req.session.userId = username
-  //   res.redirect('/')
-
-  // // } else {
-    res.cookie('username', username).redirect("/urls");
-  // // }
-
+  res.cookie('username', username).redirect("/urls");
 })
 
 app.listen(PORT, () => {
