@@ -57,6 +57,12 @@ app.get("/urls/:shortURL", (req, res) => {
   console.log(req.params)
   res.render("urls_show", templateVars) 
 });
+app.get("/register", (req, res) => {
+  let templateVars = {
+    username: req.cookies["username"],
+  };
+ res.render("register", templateVars)
+})
 
 app.post("/urls", (req, res) => {
     console.log("post to DB")
