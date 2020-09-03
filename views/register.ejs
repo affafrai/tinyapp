@@ -13,11 +13,11 @@
     <h1>register here</h1>
     <form action="/register" method="POST">
         <input type="email" name="email" placeholder="Email">
-        <!-- <button type="submit">Login!</button> -->
+         <button type="submit">Login!</button> -->
     <!-- </form> -->
 <!-- </body> -->
 
-<!-- </html>  --> -->
+<!-- </html>  --> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,12 +36,13 @@
     <%- include('partials/_header') %>
 
     <main style="margin: 1em;">
-      <h3>register</h3>
+      <h3>Create Account</h3>
       <form class="form-inline" action="/register" method="POST">
         <div class="form-group mb-2">
-          <!-- <label for="longURL">Enter a URL:</label> -->
+          <label> Email </label>
           <input class="form-control" type="email" name="email" placeholder="Email" style="width: 300px; margin: 1em">
-          <input type="password" name="password" placeholder="Password">
+          <label> Enter Password </label>
+          <input class="form-control" type="password" name="password" placeholder="Password">
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>

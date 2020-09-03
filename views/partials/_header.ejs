@@ -8,18 +8,28 @@
       
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
+          <% if (!userObj) { %> 
+            <a class="nav-item nav-link" href="/login">Login</a>
+          <a class="nav-item nav-link" href="/register">Registers</a>
           <a class="nav-item nav-link" href="/urls">My URLs</a>
           <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
-      
+          <% } else { %>
+            <label style = "margin-right: 10px; margin-top: 10px;"> logged in as :  <%= userObj.email %> </label>
+            <form method = "post" action = "/logout">
+              <button type = "submit" >logout</button>
+            </form>
+            <a class="nav-item nav-link" href="/urls">My URLs</a>
+            <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+          <% } %>
         </div>
       </div> 
     </div>
-    <div style = "display: flex; align-items: center;" >
-      <% if (username) { %>
-        <label style = "margin-right: 10px; margin-top: 10px;"> welcome <%= username %> </label>
+    <!-- <div style = "display: flex; align-items: center;" >
+      <% if (userObj) { %>
+        <label style = "margin-right: 10px; margin-top: 10px;"> welcome <%= userObj.email %> </label>
         <form method = "post" action = "/logout">
-          <!-- <input type = "text"  name = "username" placeholder="your name" >  -->
-          <button type = "submit" >logout</button>
+          <input type = "text"  name = "username" placeholder="your name" >  -->
+          <!-- <button type = "submit" >logout</button>
         </form>
       <% } else { %>
         <form method = "post" action = "/login">
@@ -27,6 +37,6 @@
           <button type = "submit" >login</button>
         </form>
         <% } %>
-    </div>
+    </div>  -->
   </nav>
 </header>
