@@ -4,6 +4,8 @@ const app = express();
 const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
+const bcrypt = require('bcrypt');
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -18,8 +20,7 @@ function generateRandomString() {
     return (result);
 } 
 //global object to store user Data
-const users ={"1234": { id: "1234", email: "user@example.com", 
-password: "purple-monkey-dinosaur" }};
+const users ={};
 
 const urlDatabase = {
   b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
@@ -140,7 +141,7 @@ app.post("/logout", (req, res) => {
 
 app.post('/login', (req, res) => {
   for (let key in users) {
-    if(users[key].email === req.body.email && users[key].password === req.body.password) {
+    if (users[key].email === req.body.email && bcrypt.compareSync(req.body.password, users[key].password)) {
       return(res.cookie('user_id', key).redirect("/urls"));
     }
   } 
@@ -157,7 +158,8 @@ app.post("/register", (req, res) => {
         return(res.sendStatus(400));
       }
     }
-    users[randomString] = {id: randomString.toString(), email: req.body.email, password: req.body.password };
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    users[randomString] = {id: randomString.toString(), email: req.body.email, password: hashedPassword };
     res.cookie('user_id', randomString).redirect("/urls");
   } else {
     
