@@ -145,11 +145,6 @@ app.post("/logout", (req, res) => {
   res.redirect("/urls");
 })
 
-// const getUserByEmail = function(email, email) {
-//   for (let key in users)
-//   if (users[key].email === req.body.email  return user;
-    
-// };
 
 app.post('/login', (req, res) => {
   for (let key in users) {
